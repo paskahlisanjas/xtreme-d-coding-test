@@ -3,5 +3,14 @@ version: '3'
 services:
   backend:
     build: ./backend/
-    ports: ['8000:8000']
-    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    volumes: 
+      - ./backend:/backend # for development purpose
+    command: ./runserver.sh
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    command: --quiet --logpath /dev/null # ignore noisy log

@@ -4,5 +4,8 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /backend
 
-COPY . /backend/
+COPY requirements.txt /backend/
 RUN pip install -r requirements.txt
+
+COPY . /backend/
+RUN chmod +x runserver.sh
