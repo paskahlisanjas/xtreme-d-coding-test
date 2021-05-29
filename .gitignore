@@ -1,6 +1,5 @@
-*/venv
 src.py
-
+,
 
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
@@ -9,7 +8,10 @@ src.py
 *.log
 *.pot
 *.pyc
-__pycache__/
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
+*/*/*/__pycache__/settings.cpython-39.pyc
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -163,3 +165,4 @@ Thumbs.db
 
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+*/settings.cpython-39.pyc
