@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from .models import Ingredient
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializer import IngredientSerializer
 
-# Create your views here.
+
+class IngredientViewSet(viewsets.ModelViewSet):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
