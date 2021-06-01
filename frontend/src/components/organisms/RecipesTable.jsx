@@ -20,7 +20,7 @@ const RecipesTable = ({ recipes = [] }) => (
               <span style={{ whiteSpace: 'pre-line' }}>{representation}</span>
             </Table.Cell>
             <Table.Cell textAlign="center">
-              <img src={illustration_url} alt="illustration" />
+              <img width="64px" src={illustration_url} alt="illustration" />
             </Table.Cell>
           </Table.Row>
         ))}
