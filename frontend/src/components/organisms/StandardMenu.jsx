@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { Menu, Segment } from 'semantic-ui-react';
+import { Container, Menu, Segment } from 'semantic-ui-react';
 
 const menuItems = [
   {
@@ -24,16 +24,18 @@ const StandardMenu = () => {
   const onMenuItemClick = (newPath) => history.replace(newPath);
 
   return (
-    <Segment>
+    <Segment size="mini">
       <Menu secondary>
-        {menuItems.map(({ name, path }) => (
-          <Menu.Item
-            key={name}
-            name={name}
-            active={path === location.pathname}
-            onClick={() => onMenuItemClick(path)}
-          />
-        ))}
+        <Container>
+          {menuItems.map(({ name, path }) => (
+            <Menu.Item
+              key={name}
+              name={name}
+              active={path === location.pathname}
+              onClick={() => onMenuItemClick(path)}
+            />
+          ))}
+        </Container>
       </Menu>
     </Segment>
   );
