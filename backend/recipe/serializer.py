@@ -1,8 +1,8 @@
-from .models import Ingredient
+from .models import Recipe
 from rest_framework import serializers
 
 
-class IngredientSerializer(serializers.HyperlinkedModelSerializer):
+class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ingredient
+        model = Recipe
         fields = ['id', 'name', 'representation', 'illustration_url']
