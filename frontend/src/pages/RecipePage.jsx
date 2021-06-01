@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import RecipesTable from '../components/organisms/RecipesTable';
 import StandardLayout from '../components/templates/StandardLayout';
 import Api from '../services/Api';
 
@@ -19,8 +20,8 @@ const RecipePage = () => {
   }, []);
 
   return (
-    <StandardLayout>
-      <pre>{JSON.stringify(recipes, null, 2)}</pre>
+    <StandardLayout header="Availiable Recipes">
+      <RecipesTable recipes={recipes} />
     </StandardLayout>
   );
 };
