@@ -14,3 +14,11 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     command: --quiet --logpath /dev/null # ignore noisy log
+  frontend:
+    build: ./frontend/
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/frontend
+    command: yarn start
+    
