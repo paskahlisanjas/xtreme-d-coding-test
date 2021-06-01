@@ -1,18 +1,15 @@
-import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import WorkbenchPage from './pages/WorkbenchPage';
+import RecipePage from './pages/RecipePage';
+import IngredientPage from './pages/IngredientPage';
 
-const comp = () => <div>Sample Component</div>;
-const anotherComp = () => <div>Another Sample Component</div>;
 
-function App() {
-  return (
-    <div className="App">
-      <Switch>
-        <Route path="/" component={comp} exact />
-        <Route path="/another-path" component={anotherComp} />
-      </Switch>
-    </div>
-  );
-}
+const App = () => (
+  <Switch>
+    <Route path="/" component={WorkbenchPage} exact />
+    <Route path="/recipe" component={RecipePage} />
+    <Route path="/ingredient" component={IngredientPage} />
+  </Switch>
+);
 
 export default App;
