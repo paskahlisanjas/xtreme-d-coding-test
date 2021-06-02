@@ -14,7 +14,7 @@ const IngredientsTable = ({ ingredients = [] }) => (
 
       <Table.Body>
         {ingredients.map(({ name, representation, illustration_url }) => (
-          <Table.Row>
+          <Table.Row key={representation}>
             <Table.Cell>{name}</Table.Cell>
             <Table.Cell textAlign="center">{representation}</Table.Cell>
             <Table.Cell textAlign="center">

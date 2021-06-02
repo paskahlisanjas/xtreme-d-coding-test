@@ -14,7 +14,7 @@ const RecipesTable = ({ recipes = [] }) => (
 
       <Table.Body>
         {recipes.map(({ name, representation, illustration_url }) => (
-          <Table.Row>
+          <Table.Row key={name}>
             <Table.Cell>{name}</Table.Cell>
             <Table.Cell textAlign="center">
               <span style={{ whiteSpace: 'pre-line' }}>{representation}</span>
