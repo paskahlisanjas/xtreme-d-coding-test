@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import RecipesTable from '../components/organisms/RecipesTable';
 import StandardLayout from '../components/templates/StandardLayout';
+import DataLoaderReducer, {
+  DataLoaderActions,
+} from '../common/DataLoader.Reducer';
 import Api from '../services/Api';
 
 const RecipePage = () => {
-  const [recipes, setRecipes] = useState([]);
+  const [dataLoaderState, dispatchDataLoader] = useReducer(
+    DataLoaderReducer.reducer,
+    DataLoaderReducer.initialState
+  );
 
   const loadData = async () => {
+    dispatchDataLoader({ type: DataLoaderActions.FETCH });
     try {
       const response = await Api.getRecipes();
-      setRecipes(response.data);
+      dispatchDataLoader({
+        type: DataLoaderActions.FETCHED,
+        data: response.data,
+      });
     } catch (error) {
       console.log('Failed to load recipes.');
     }
@@ -21,7 +31,7 @@ const RecipePage = () => {
 
   return (
     <StandardLayout header="Availiable Recipes">
-      <RecipesTable recipes={recipes} />
+      <RecipesTable recipes={dataLoaderState.data || []} />
     </StandardLayout>
   );
 };
