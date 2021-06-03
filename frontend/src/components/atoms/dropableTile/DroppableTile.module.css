@@ -1,0 +1,13 @@
+.tile, .tileOnOver {
+  background-color: gainsboro;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  height: 64px;
+  width: 64px;
+}
+
+.tileOnOver {
+  background-color: navajowhite;
+}
