@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DroppableGrid from '../molecules/droppableGrid/DroppableGrid';
 import { Button, Grid, Input, Message, Segment } from 'semantic-ui-react';
 
 const defaultGridSize = 4;
+
+const SizeConfigInput = ({ label, onChange, value }) => (
+  <Input
+    size="mini"
+    label={label}
+    type="number"
+    onChange={onChange}
+    value={value}
+    fluid
+  />
+);
 
 const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
   const [rowSize, setRowSize] = useState(defaultGridSize);
@@ -12,50 +23,47 @@ const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
   const [rowConfig, setRowConfig] = useState(defaultGridSize);
   const [colConfig, setColConfig] = useState(defaultGridSize);
 
-  const [matrix, setMatrix] = useState(
-    Array.from({ length: rowSize }, () =>
-      Array.from({ length: colSize }, () => '_')
-    )
-  );
+  const [arrangement, setArrangement] = useState({});
 
   const updateMatrix = (row, col, item) => {
-    matrix[row][col] = item.representation;
-    onMatrixUpdated([...matrix]);
-    setMatrix([...matrix]);
+    setArrangement((prev) => ({ ...prev, [`${row}|${col}`]: item }));
   };
 
   const resizeGrid = () => {
     if (!rowConfig || !rowSize) return;
-
     setRowSize(rowConfig);
     setColSize(colConfig);
   };
+
+  useEffect(() => {
+    if (!arrangement) return;
+    for (let key in arrangement) {
+      const [row, col] = key.split('|');
+      if (row >= rowSize || col >= colSize) delete arrangement[key];
+    }
+  }, [rowSize, colSize]);
+
+  useEffect(() => onMatrixUpdated(arrangement), [arrangement]);
 
   return (
     <Segment.Group>
       <Segment>
         <Grid columns={3}>
           <Grid.Column>
-            <Input
-              size="mini"
+            <SizeConfigInput
               label="Rows"
-              type="number"
-              onChange={(_, { value }) => setRowConfig(value)}
               value={rowConfig}
-              fluid
+              onChange={(_, { value }) => setRowConfig(value)}
             />
           </Grid.Column>
           <Grid.Column>
-            <Input
-              size="mini"
-              label="Rows"
-              type="number"
-              onChange={(_, { value }) => setColConfig(value)}
+            <SizeConfigInput
+              label="Columns"
               value={colConfig}
-              fluid
+              onChange={(_, { value }) => setColConfig(value)}
             />
           </Grid.Column>
-          <Grid.Column width={2}>
+          <Grid.Column>
             <Button size="tiny" color="blue" onClick={resizeGrid}>
               Resize
             </Button>
@@ -70,6 +78,7 @@ const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
           rowSize={rowSize}
           colSize={colSize}
           onMatrixUpdated={updateMatrix}
+          arrangement={arrangement}
         />
       </Segment>
     </Segment.Group>

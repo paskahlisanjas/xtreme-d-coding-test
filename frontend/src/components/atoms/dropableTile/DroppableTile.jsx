@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import constant from '../constant';
 import { useDrop } from 'react-dnd';
 
@@ -8,17 +8,13 @@ const DroppableTile = ({
   type = constant.DragAndDrop.DRAGGABLE,
   row,
   col,
+  illustration,
   onItemDropped = (e) => e,
 }) => {
-  const [droppedItem, setDroppedItem] = useState();
-
   const [{ isOver }, dropRef] = useDrop(
     () => ({
       accept: type,
-      drop: (item) => {
-        onItemDropped(row, col, item);
-        setDroppedItem(item);
-      },
+      drop: (item) => onItemDropped(row, col, item),
       collect: (monitor) => ({
         isOver: monitor.isOver(),
       }),
@@ -28,9 +24,7 @@ const DroppableTile = ({
 
   return (
     <div ref={dropRef} className={isOver ? styles.tileOnOver : styles.tile}>
-      {droppedItem && (
-        <img src={droppedItem.illustration} alt="tile" width="40" />
-      )}
+      {illustration && <img src={illustration} alt="tile" width="40" />}
     </div>
   );
 };
