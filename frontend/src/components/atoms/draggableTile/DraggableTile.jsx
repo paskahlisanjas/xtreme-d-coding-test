@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import constants from '../constant';
+import constants from '../../constant';
 
 import styles from './DraggableTile.module.css';
 

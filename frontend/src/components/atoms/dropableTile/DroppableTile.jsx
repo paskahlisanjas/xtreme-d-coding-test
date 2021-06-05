@@ -1,5 +1,5 @@
 import React from 'react';
-import constant from '../constant';
+import constant from '../../constant';
 import { useDrop } from 'react-dnd';
 
 import styles from './DroppableTile.module.css';
