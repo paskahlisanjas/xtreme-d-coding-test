@@ -4,32 +4,34 @@ import DroppableTile from '../../atoms/dropableTile/DroppableTile';
 import styles from './DroppableGrid.module.css';
 
 const DroppableGrid = ({
-  rowSize = 4,
-  colSize = 4,
+  rowSize,
+  colSize,
   arrangement = {},
   onMatrixUpdated = (e) => e,
 }) => {
+  const generateGrid = () => {
+    const grids = [];
+    for (let row = 0; row < rowSize; row++) {
+      for (let col = 0; col < colSize; col++) {
+        const key = `${row}|${col}`;
+        grids.push(
+          <DroppableTile
+            key={key}
+            onItemDropped={(item) => onMatrixUpdated(row, col, item)}
+            illustration={arrangement[key] && arrangement[key].illustration}
+          />
+        );
+      }
+    }
+    return grids;
+  };
+
   return (
     <div
       className={styles.gridContainer}
-      style={{ gridTemplateColumns: `repeat(${rowSize}, 64px)` }}
+      style={{ gridTemplateColumns: `repeat(${colSize}, 64px)` }}
     >
-      {[...Array(rowSize * colSize).keys()].map((_, index) => {
-        const row = Math.floor(index / rowSize);
-        const col = index % rowSize;
-        return (
-          <DroppableTile
-            key={index}
-            row={row}
-            col={col}
-            onItemDropped={(row, col, item) => onMatrixUpdated(row, col, item)}
-            illustration={
-              arrangement[`${row}|${col}`] &&
-              arrangement[`${row}|${col}`].illustration
-            }
-          />
-        );
-      })}
+      {generateGrid()}
     </div>
   );
 };

@@ -35,7 +35,7 @@ const GridResizer = ({ onResize = (e) => e }) => {
           />
         </Grid.Column>
         <Grid.Column>
-          <Button size="tiny" color="blue" onClick={() => onResize(rowConfig, colConfig)}>
+          <Button size="tiny" color="blue" onClick={() => onResize(parseInt(rowConfig), parseInt(colConfig))}>
             Resize
           </Button>
         </Grid.Column>

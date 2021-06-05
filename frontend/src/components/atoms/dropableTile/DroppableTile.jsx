@@ -6,15 +6,13 @@ import styles from './DroppableTile.module.css';
 
 const DroppableTile = ({
   type = constant.DragAndDrop.DRAGGABLE,
-  row,
-  col,
   illustration,
   onItemDropped = (e) => e,
 }) => {
   const [{ isOver }, dropRef] = useDrop(
     () => ({
       accept: type,
-      drop: (item) => onItemDropped(row, col, item),
+      drop: onItemDropped,
       collect: (monitor) => ({
         isOver: monitor.isOver(),
       }),
