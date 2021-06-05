@@ -6,12 +6,13 @@ def parse_arrangement(rowSize, colSize, raw_arrangement):
     return arrangement
 
 
-def is_valid_submatrix(matrix, submatrix):
+def count_submatrix(matrix, submatrix):
+    count = 0
     for row in range(len(matrix)):
         for col in range(len(matrix[row])):
             if __bfs_check__(submatrix, matrix, row, col):
-                return True
-    return False
+                count += 1
+    return count
 
 def __bfs_check__(submatrix, matrix, i_row, i_col):
   visited = set()

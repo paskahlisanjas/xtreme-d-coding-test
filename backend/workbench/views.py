@@ -13,9 +13,9 @@ def craft_item(request):
     arrangement = parse_arrangement(rowSize, colSize, raw_arrangement)
 
     service = WorkbenchService()
-    service.craft_item(arrangement)
+    craftable_items = service.craft_item(arrangement)
 
     return Response({
-        'result': arrangement,
-        'message': 'Dummy API'
+        'craftable_items': craftable_items,
+        'message': 'success'
     })
