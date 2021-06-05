@@ -5,9 +5,11 @@ import GridResizer from '../molecules/GridResizer';
 import constants from '../constant';
 import GridActions from '../molecules/GridActions';
 
+import Api from '../../services/Api';
+
 const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
   const [rowSize, setRowSize] = useState(constants.GridSize.DEFAULT_SIZE);
-  const [colSize, setColSize] = useState(constants.GridSize.DEFAULT_SIZE);
+  const [columnSize, setColumnSize] = useState(constants.GridSize.DEFAULT_SIZE);
 
   const [arrangement, setArrangement] = useState({});
 
@@ -18,16 +20,28 @@ const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
   const resizeGrid = (rowConfig, colConfig) => {
     if (!rowConfig || !rowSize) return;
     setRowSize(rowConfig);
-    setColSize(colConfig);
+    setColumnSize(colConfig);
   };
 
   useEffect(() => {
     if (!arrangement) return;
     for (let key in arrangement) {
       const [row, col] = key.split('|');
-      if (row >= rowSize || col >= colSize) delete arrangement[key];
+      if (row >= rowSize || col >= columnSize) delete arrangement[key];
     }
-  }, [rowSize, colSize]);
+  }, [rowSize, columnSize]);
+
+  const craftItem = () => {
+    const parsedArrangement = {};
+    for (let key in arrangement) {
+      parsedArrangement[key] = arrangement[key].representation;
+    }
+    Api.craftItem({
+      rowSize,
+      columnSize,
+      arrangement: parsedArrangement,
+    });
+  };
 
   useEffect(() => onMatrixUpdated(arrangement), [arrangement]);
 
@@ -36,11 +50,11 @@ const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
       <GridResizer onResize={resizeGrid} />
       <Segment>
         <Message size="mini" info>
-          <b>Current Size:</b> {rowSize}x{colSize}
+          <b>Current Size:</b> {rowSize}x{columnSize}
         </Message>
         <DroppableGrid
           rowSize={rowSize}
-          colSize={colSize}
+          columnSize={columnSize}
           onMatrixUpdated={updateMatrix}
           arrangement={arrangement}
         />
@@ -48,7 +62,7 @@ const ResizableDroppableGrid = ({ onMatrixUpdated = (e) => e }) => {
       <Segment textAlign="right">
         <GridActions
           onClear={() => setArrangement({})}
-          onCraftItem={() => console.log('craft item!')}
+          onCraftItem={craftItem}
         />
       </Segment>
     </Segment.Group>
