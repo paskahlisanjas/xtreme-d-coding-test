@@ -9,10 +9,6 @@ class Recipe(models.Model):
     illustration_url = models.TextField()
     matrix = models.TextField(null=True, blank=True)
 
-    def is_arrangement_matched(self, arrangement):
-        # TODO: apply submatrix matching algorithm, return True if it does, and False otherwise
-        pass
-
     def save(self, *args, **kwargs):
         self.matrix = json.dumps([list(row) for row in self.representation.split('\r\n')])
         return super(Recipe, self).save(*args, **kwargs)
