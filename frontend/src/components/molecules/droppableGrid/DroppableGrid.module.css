@@ -1,0 +1,7 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 64px);
+  gap: 10px;
+  overflow: auto;
+  max-height: 450px;
+}
