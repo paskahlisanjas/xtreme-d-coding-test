@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IngredientPage should render everything properly 1`] = `
+<div>
+  <div
+    class="ui mini segment"
+  >
+    <div
+      class="ui secondary menu"
+    >
+      <div
+        class="ui container"
+      >
+        <a
+          class="active item"
+        >
+          Workbench
+        </a>
+        <a
+          class="item"
+        >
+          Recipe
+        </a>
+        <a
+          class="item"
+        >
+          Ingredient
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ui container"
+  >
+    <h1
+      class="ui dividing header"
+    >
+      Available Ingredients
+    </h1>
+    <table
+      class="ui celled unstackable table"
+    >
+      <thead
+        class=""
+      >
+        <tr
+          class=""
+        >
+          <th
+            class=""
+          >
+            Name
+          </th>
+          <th
+            class="center aligned"
+          >
+            Symbol
+          </th>
+          <th
+            class="center aligned"
+          >
+            Illustration
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class=""
+      />
+    </table>
+    <div
+      class="ui fluid placeholder"
+      style="height: 200px; border-radius: 5px;"
+    />
+  </div>
+</div>
+`;
