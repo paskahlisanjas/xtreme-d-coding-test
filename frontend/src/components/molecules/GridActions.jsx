@@ -8,15 +8,21 @@ const GridActions = ({
   return (
     <>
       <Modal
+        basic
         trigger={<Button>Clear</Button>}
         header="Clear Workbench"
         content="Are you sure you want to clear the workbench? this action is irreversible."
         actions={[
-          'Cancel',
+          {
+            key: 'cancel',
+            content: 'Cancel',
+            inverted: true
+          },
           {
             key: 'yes',
             content: 'Yes',
-            negative: true,
+            color: 'red',
+            inverted: true,
             onClick: onClear,
           },
         ]}

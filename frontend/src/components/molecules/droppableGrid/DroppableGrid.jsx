@@ -1,4 +1,5 @@
 import React from 'react';
+import Utils from '../../../common/Utils';
 import DroppableTile from '../../atoms/dropableTile/DroppableTile';
 
 import styles from './DroppableGrid.module.css';
@@ -13,7 +14,7 @@ const DroppableGrid = ({
     const grids = [];
     for (let row = 0; row < rowSize; row++) {
       for (let col = 0; col < colSize; col++) {
-        const key = `${row}|${col}`;
+        const key = Utils.generateArrangementKey(row, col);
         grids.push(
           <DroppableTile
             key={key}
