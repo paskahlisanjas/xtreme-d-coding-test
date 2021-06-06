@@ -5,7 +5,7 @@ const Utils = {
   extractArrangementRepresentation: (arrangement) => {
     const parsedArrangement = {};
     for (let key in arrangement) {
-      parsedArrangement[key] = arrangement[key].representation;
+      parsedArrangement[key] = arrangement[key] && arrangement[key].representation;
     }
     return parsedArrangement;
   }
