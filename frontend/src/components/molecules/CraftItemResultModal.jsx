@@ -7,6 +7,20 @@ const CraftItemResultModal = ({
   result = {},
   onClose,
 }) => {
+  let craftedItem = {};
+  if (!crafting && result.status === 'SUCCESS' && result.craftable_items) {
+    for (let i in result.craftable_items) {
+      const item = result.craftable_items[i];
+      if (item.matches === 1) {
+        craftedItem = {
+          illustration: item.recipe.illustration_url,
+          name: item.recipe.name,
+        };
+        break;
+      }
+    }
+  }
+
   return (
     <Modal basic closeOnDimmerClick={false} open={show} size="small">
       {crafting ? (
@@ -22,7 +36,23 @@ const CraftItemResultModal = ({
             {result.status}
           </Header>
           <Modal.Content>
-            <p>{result.message}</p>
+            <div align="center">
+              {result.message}
+              {craftedItem.name && (
+                <>
+                  <div style={{ marginTop: '16px' }}>
+                    <img
+                      src={craftedItem.illustration}
+                      alt="crafted"
+                      width="64px"
+                    />
+                  </div>
+                  <div>
+                    <small>{craftedItem.name}</small>
+                  </div>
+                </>
+              )}
+            </div>
           </Modal.Content>
           <Modal.Actions>
             <Button inverted onClick={onClose}>
