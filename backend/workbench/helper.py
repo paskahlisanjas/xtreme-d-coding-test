@@ -1,9 +1,17 @@
-def parse_arrangement(rowSize, colSize, raw_arrangement):
-    arrangement = [['_' for __ in range(colSize)] for _ in range(rowSize)]
+def parse_arrangement(row_size, col_size, raw_arrangement):
+    arrangement = [['_' for __ in range(col_size)] for _ in range(row_size)]
     for key in raw_arrangement:
         row, col = key.split('|')
         arrangement[int(row)][int(col)] = raw_arrangement[key]
     return arrangement
+
+
+def generate_message(matched_recipes):
+    if matched_recipes == 0:
+        return "Failed to craft item. Workbench arrangement doesn't match any recipe.", 'FAILED'
+    if matched_recipes > 1:
+        return "Failed to craft item. Workbench arrangement matches multiple recipes.", 'FAILED'
+    return "An item is successfully crafted!", 'SUCCESS'
 
 
 def count_submatrix(matrix, submatrix):
