@@ -1,13 +1,15 @@
 import React from 'react';
-import { Icon, Menu, Table } from 'semantic-ui-react';
+import { Placeholder, Table } from 'semantic-ui-react';
 
-const RecipesTable = ({ recipes = [] }) => (
+const RecipesTable = ({ recipes = [], loading = false }) => (
   <>
     <Table celled unstackable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell textAlign="center">Arrangement Symbol</Table.HeaderCell>
+          <Table.HeaderCell textAlign="center">
+            Arrangement Symbol
+          </Table.HeaderCell>
           <Table.HeaderCell textAlign="center">Illustration</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -25,26 +27,8 @@ const RecipesTable = ({ recipes = [] }) => (
           </Table.Row>
         ))}
       </Table.Body>
-
-      <Table.Footer>
-        <Table.Row>
-          <Table.HeaderCell colSpan="3">
-            <Menu floated="right" pagination>
-              <Menu.Item as="a" icon>
-                <Icon name="chevron left" />
-              </Menu.Item>
-              <Menu.Item as="a">1</Menu.Item>
-              <Menu.Item as="a">2</Menu.Item>
-              <Menu.Item as="a">3</Menu.Item>
-              <Menu.Item as="a">4</Menu.Item>
-              <Menu.Item as="a" icon>
-                <Icon name="chevron right" />
-              </Menu.Item>
-            </Menu>
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Footer>
     </Table>
+    {loading && <Placeholder style={{ height: 200, borderRadius: 5 }} fluid />}
   </>
 );
 

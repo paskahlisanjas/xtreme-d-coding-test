@@ -31,7 +31,10 @@ const IngredientPage = () => {
 
   return (
     <StandardLayout header="Available Ingredients">
-      <IngredientsTable ingredients={dataLoaderState.data || []} />
+      <IngredientsTable
+        ingredients={dataLoaderState.data || []}
+        loading={dataLoaderState.loading}
+      />
     </StandardLayout>
   );
 };

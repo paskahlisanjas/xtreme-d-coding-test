@@ -1,9 +1,10 @@
 import React, { useEffect, useReducer } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Placeholder } from 'semantic-ui-react';
 import Api from '../../../services/Api';
 import DraggableTile from '../../atoms/draggableTile/DraggableTile';
-import DataLoader, { DataLoaderActions } from '../../../common/DataLoader.Reducer';
-
+import DataLoader, {
+  DataLoaderActions,
+} from '../../../common/DataLoader.Reducer';
 
 const DraggableIngredients = () => {
   const [ingredientsState, dispatchIngredients] = useReducer(
@@ -24,6 +25,9 @@ const DraggableIngredients = () => {
 
   return (
     <Segment>
+      {ingredientsState.loading && (
+        <Placeholder style={{ height: 70, borderRadius: 5 }} fluid />
+      )}
       <div style={{ display: 'flex' }}>
         {(ingredientsState.data || []).map(
           ({ illustration_url, representation }) => (

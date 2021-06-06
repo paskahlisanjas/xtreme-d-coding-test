@@ -31,7 +31,10 @@ const RecipePage = () => {
 
   return (
     <StandardLayout header="Availiable Recipes">
-      <RecipesTable recipes={dataLoaderState.data || []} />
+      <RecipesTable
+        recipes={dataLoaderState.data || []}
+        loading={dataLoaderState.loading}
+      />
     </StandardLayout>
   );
 };
