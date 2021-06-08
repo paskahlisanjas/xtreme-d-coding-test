@@ -1,17 +1,25 @@
-# import json
+import json
 
-# from rest_framework.test import RequestsClient
+from rest_framework.test import RequestsClient
 from django.test import TestCase
+from recipe.models import Recipe
 from .helper import generate_message, parse_arrangement, count_submatrix
+from .service import WorkbenchService
 
 
+RAW_ARRANGEMENT = {
+    '1|1': 'I',
+    '2|2': 'I',
+    '1|3': 'I'
+}
+
+STANDARD_ARRANGEMENT = [
+    ['_', '_', '_', '_'],
+    ['_', 'I', '_', 'I'],
+    ['_', '_', 'I', '_'],
+    ['_', '_', '_', '_']
+]
 class HelperTest(TestCase):
-    raw_arrangement = {
-        '1|1': 'I',
-        '2|2': 'I',
-        '1|3': 'I'
-    }
-
     recipe = [
         ['I', '_', 'I'],
         ['_', 'I', '_']
@@ -38,13 +46,8 @@ class HelperTest(TestCase):
     def test_parse_arrangement(self):
         """test helper.parse_arrangement 4x4, return desired matrix"""
         self.assertEquals(
-            parse_arrangement(4, 4, self.raw_arrangement),
-            [
-                ['_', '_', '_', '_'],
-                ['_', 'I', '_', 'I'],
-                ['_', '_', 'I', '_'],
-                ['_', '_', '_', '_']
-            ]
+            parse_arrangement(4, 4, RAW_ARRANGEMENT),
+            STANDARD_ARRANGEMENT
         )
 
     def test_parse_arrangement(self):
@@ -62,15 +65,7 @@ class HelperTest(TestCase):
     def test_count_submatrix_single_match(self):
         """test helper.count_submatrix with a match, return desired number"""
         self.assertEquals(
-            count_submatrix(
-                [
-                    ['_', '_', '_', '_'],
-                    ['_', 'I', '_', 'I'],
-                    ['_', '_', 'I', '_'],
-                    ['_', '_', '_', '_']
-                ],
-                self.recipe
-            ),
+            count_submatrix(STANDARD_ARRANGEMENT,self.recipe),
             1
         )
     
@@ -111,13 +106,39 @@ class HelperTest(TestCase):
         )
 
 
-# class APITest(TestCase):
-#     def test_api_list_ingredients_response_length(self):
-#         """test GET /api/recipes/, should return all records"""
-#         client = RequestsClient()
-#         response = client.get('http://testserver/api/recipes/')
-#         self.assertEqual(response.status_code, 200)
+class ServiceTest(TestCase):
+    def setUp(self):
+        Recipe.objects.create(
+            name='Bucket',
+            representation='I_I\r\n_I_',
+            illustration_url='https://www.bucket-image.com/file.png')
 
-#         decoded_content = bytes.decode(response.content)
-#         data = json.loads(decoded_content)
-#         self.assertEqual(len(data), 1)
+    def test_craft_item(self):
+        service = WorkbenchService()
+        crafted_items, count = service.craft_item(STANDARD_ARRANGEMENT)
+        self.assertEquals(count, 1)
+        self.assertEquals(len(crafted_items), 1)
+        self.assertEquals(crafted_items[0]['matches'], 1)
+        self.assertEquals(crafted_items[0]['recipe']['name'], 'Bucket')
+
+
+class APITest(TestCase):
+    def setUp(self):
+        Recipe.objects.create(
+            name='Bucket',
+            representation='I_I\r\n_I_',
+            illustration_url='https://www.bucket-image.com/file.png')
+
+    def test_api_list_ingredients_response_length(self):
+        """test POST /api/workbench/ with single match with recipe, should return success"""
+        client = RequestsClient()
+        response = client.post('http://testserver/api/workbench/', json={
+            'rowSize': 4,
+            'columnSize': 4,
+            'arrangement': RAW_ARRANGEMENT
+        })
+        self.assertEqual(response.status_code, 200)
+
+        decoded_content = bytes.decode(response.content)
+        data = json.loads(decoded_content)
+        self.assertEqual(data['status'], 'SUCCESS')
