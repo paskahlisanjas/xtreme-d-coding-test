@@ -2,7 +2,7 @@
 
 **Item Crafter** is a web app where you can craft items with the given ingredients according to the available recipes. This web is built using ReactJS and Django. It runs on top of docker container.
 
-![web-preview-landing-page](./docs/img/preview-landing-page.png)
+![](./docs/video/preview-vid.mov)
 
 # Table of Contents
 
